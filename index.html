@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>HACKTIVATE — Matrix Terminal</title>
+  <link rel="icon" href="assets/favicon.svg" />
+  <link rel="stylesheet" href="style.css" />
+  <!-- optional analytics -->
+  <!-- <script defer data-domain="hacktivate.app" src="https://plausible.io/js/script.js"></script> -->
+</head>
+<body>
+<canvas id="matrix"></canvas>
+
+<div class="desktop">
+  <header class="header">
+    <div class="brand">
+      <svg class="logo" viewBox="0 0 720 190" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="HACKTIVATE LABS">
+        <defs>
+          <linearGradient id="hx" x1="0" x2="1" y1="0.5" y2="0.5">
+            <stop offset="0" stop-color="#00ff7f"/>
+            <stop offset="1" stop-color="#00b2ff"/>
+          </linearGradient>
+        </defs>
+        <rect x="0" y="26" width="720" height="130" rx="16" fill="rgba(1,12,10,0.3)"/>
+        <text x="32" y="108" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace" font-size="64" font-weight="700" letter-spacing="8" fill="url(#hx)">
+          HACKTIVATE
+        </text>
+        <text x="520" y="144" font-family="Inter, system-ui, -apple-system" font-size="26" fill="#7fffd4" opacity="0.9">
+          AI • SECURITY • AUTOMATION
+        </text>
+      </svg>
+      <div class="title">Matrix Terminal • steve㉿hacktivate</div>
+    </div>
+    <nav class="nav">
+      <button data-target="terminal" class="active">Terminal</button>
+      <button data-target="about">About</button>
+      <button data-target="projects">Projects</button>
+      <button data-target="contact">Contact</button>
+      <button data-target="download">Download</button>
+    </nav>
+  </header>
+
+  <main class="main">
+    <section id="terminal" class="panel active" aria-live="polite">
+      <div class="term-header">─(steve㉿HACKTIVATE)-[~] └─$ welcome.sh</div>
+      <div id="console" class="console" tabindex="0" role="application" aria-label="HACKTIVATE terminal">
+        <div class="line">Welcome to <span class="accent">HACKTIVATE</span> — Matrix terminal interface.</div>
+        <div class="line">Type <span class="cmd">help</span> to see commands or use the top nav.</div>
+        <div id="output" class="output" aria-hidden="false"></div>
+        <div class="prompt">
+          <span class="user">steve㉿HACKTIVATE</span>:~$ 
+          <input id="cmdline" autofocus autocomplete="off" spellcheck="false" />
+        </div>
+      </div>
+      <div class="hint">Commands: <code>help</code> · <code>about</code> · <code>projects</code> · <code>contact</code> · <code>clear</code> · <code>download</code> · <code>launch</code></div>
+    </section>
+
+    <section id="about" class="panel">
+      <h2>About — Steve Plasencia</h2>
+      <p>Founder of <strong>HACKTIVATE LABS</strong>. Security researcher, AI automation strategist, Web3/staffing operator.</p>
+      <p>Aliases: <code>@FunkyMonkey5150</code> · <code>Dappster</code> · <code>Crypto Head Hunter</code> · <code>HACKTIVATE</code></p>
+      <ul>
+        <li>AI / Agents / Automation (GoHighLevel, Zapier, Make, custom LLM tools)</li>
+        <li>Cyber / Red Team / Pentesting / Wireless & IoT research</li>
+        <li>Blockchain staffing: on-chain resumes, verifiable credentials, tokenized payroll</li>
+      </ul>
+    </section>
+
+    <section id="projects" class="panel">
+      <h2>Featured Projects</h2>
+      <ul class="proj-list">
+        <li><strong>Rocket Rabbit AI</strong> — AI SaaS & funnel automation engine.</li>
+        <li><strong>The Staffing DAO</strong> — blockchain-powered workforce platform.</li>
+        <li><strong>HACKTIVATE LABS Tools</strong> — NetMapper, LoRaMonitor, FuzzForge, TokenWatch, AI ReconX, PromptGuard, ContainerGuard.</li>
+        <li><strong>Hardware / RF / Wireless</strong> — Pwnagotchi, Flipper Zero toolkit, ESP32 (LilyGO), WiFi Pineapple.</li>
+      </ul>
+      <p class="hint">All research is for authorized, educational, defensive use only.</p>
+    </section>
+
+    <section id="contact" class="panel">
+      <h2>Contact / Collab</h2>
+      <p>Fill the form or run <code>contact</code> in the terminal.</p>
+      <form id="contactForm" action="https://formspree.io/f/your-form-id" method="POST" class="contact-form">
+        <label>
+          Your email
+          <input name="email" type="email" required />
+        </label>
+        <label>
+          Your message
+          <textarea name="message" rows="4" required>Interested in AI SaaS / staffing automation / Web3 workforce.</textarea>
+        </label>
+        <button type="submit">Send Secure Request</button>
+      </form>
+      <p class="hint">Direct: <a href="mailto:info@stevesjobbs.com">info@stevesjobbs.com</a> · <a href="tel:+13233960096">+1 (323) 396-0096</a> · WhatsApp: 213-301-6016</p>
+    </section>
+
+    <section id="download" class="panel">
+      <h2>Downloads</h2>
+      <p><button id="downloadReadme" class="btn">Download HACKTIVATE README</button></p>
+      <p><button id="downloadProfile" class="btn">Download Profile .txt</button></p>
+      <p class="hint">Upload <code>index.html</code>, <code>style.css</code>, <code>script.js</code> to GitHub Pages.</p>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div>© 2025 Steve Plasencia — HACKTIVATE LABS</div>
+    <div>Matrix UI • Terminal Router • GitHub Pages ready</div>
+  </footer>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
