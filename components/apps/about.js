@@ -1,0 +1,1 @@
+export function displayAbout(){const d=document.createElement('div');d.innerHTML=`<h3>Steve Plasencia — HACKTIVATE LABS</h3><p>AI • Security • Automation • Web3 • Staffing • SaaS</p><p>aka: FunkyMonkey5150 · Dappster · Crypto Head Hunter</p><p>Founder: Rocket Rabbit AI · LA Media Nation · The Staffing DAO · HACKTIVATE LABS</p>`;return d;}

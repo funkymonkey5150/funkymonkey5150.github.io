@@ -1,0 +1,1 @@
+export function displayFlipper(){const d=document.createElement('div');d.innerHTML=`<h3>Flipper Zero Toolkit</h3><p>RF / Sub-GHz / RFID research dashboard (UI only).</p>`;return d;}

@@ -1,0 +1,1 @@
+export function displayPwnagotchi(){const d=document.createElement('div');d.innerHTML=`<h3>Pwnagotchi Lab</h3><p>AI-driven Wi-Fi recon sandbox — authorized / defensive only.</p>`;return d;}

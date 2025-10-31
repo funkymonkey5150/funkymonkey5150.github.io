@@ -1,0 +1,1 @@
+export function displayNmap(){const d=document.createElement('div');d.innerHTML=`<pre>Nmap scan report for 10.0.0.5\n22/tcp  open  ssh\n80/tcp  open  http\n443/tcp open  https</pre>`;return d;}

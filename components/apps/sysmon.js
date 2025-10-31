@@ -1,0 +1,1 @@
+export function displaySysmon(){const d=document.createElement('div');d.innerHTML=`<h3>System Monitor</h3><p>CPU: 8% • MEM: 31% • Containers: 3</p>`;return d;}

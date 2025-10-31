@@ -1,0 +1,1 @@
+export function displayGithub(){const d=document.createElement('div');d.innerHTML=`<p><a href='https://github.com/FunkyMonkey5150' target='_blank'>Open Steve's GitHub</a></p>`;return d;}

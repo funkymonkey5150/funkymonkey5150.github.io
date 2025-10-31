@@ -1,0 +1,1 @@
+export function displayGedit(){const d=document.createElement('div');d.innerHTML=`<h3>Contact / Notes</h3><textarea style='width:100%;height:140px;'>info@stevesjobbs.com\nhacktivate5150@gmail.com\nblockchainstaffingsolutions@gmail.com\n323-396-0096</textarea>`;return d;}

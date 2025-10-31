@@ -1,0 +1,1 @@
+export function displayMetasploit(){const d=document.createElement('div');d.innerHTML=`<h3>Metasploit (UI demo)</h3><p>Authorized, educational, defensive research only.</p>`;return d;}

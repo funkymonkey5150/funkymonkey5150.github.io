@@ -1,0 +1,1 @@
+export function displaySSHClient(){const d=document.createElement('div');d.innerHTML=`<h3>SSH Client</h3><input placeholder='user@host:22' style='width:100%;margin-bottom:6px;'><button class='btn'>Connect (demo)</button>`;return d;}

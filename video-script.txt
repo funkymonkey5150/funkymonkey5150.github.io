@@ -1,0 +1,11 @@
+TITLE: Build a Hacker Portfolio on GitHub Pages (HACKTIVATE LABS)
+
+Intro:
+"Yo what’s good carnalgas — Steve from HACKTIVATE LABS. This is how to build a Matrix desktop portfolio for hackers and automation devs."
+
+Steps:
+1) Download / clone repo
+2) Upload to GitHub
+3) Turn on Pages
+4) Show matrix + terminal + About + Reelify
+5) CTA: "Automate or vanish."
