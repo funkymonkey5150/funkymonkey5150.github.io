@@ -11,15 +11,36 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- Matrix background -->
   <canvas id="matrix"></canvas>
+
+  <!-- Desktop UI -->
   <div id="desktop" class="desktop">
     <header class="topbar">
       <div class="brand">HACKTIVATE LABS</div>
-      <div class="status">STEVE.PLASENCIA@OUTLOOK.COM • AI Automation Central</div>
+      <div class="status">steve㉿hacktivate · AI · Security · Automation</div>
     </header>
+
+    <!-- Desktop shortcuts -->
     <div id="shortcuts" class="shortcuts"></div>
+
+    <!-- Window manager root -->
     <main id="wm-root" class="wm-root" aria-live="polite"></main>
+
+    <!-- Taskbar -->
+    <footer class="taskbar">
+      <div class="taskbar-left">
+        <span class="task-logo">㉿</span>
+        <span class="task-label">Hacktivate OS</span>
+      </div>
+      <div id="task-items" class="task-items"></div>
+      <div class="taskbar-right">
+        <span id="sys-status" class="sys-status">NET: OK · CPU: 12%</span>
+        <span id="clock" class="clock"></span>
+      </div>
+    </footer>
   </div>
-  <script type="module" src="main.js"></script>
+
+  <script src="main.js"></script>
 </body>
 </html>
