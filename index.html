@@ -1,175 +1,25 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Hacktivate OS</title>
-  <style>
-    body,html{margin:0;height:100%;background:#000;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,sans-serif;color:#e6fff6}
-    #matrix{position:fixed;inset:0;z-index:0;background:#000}
-    .desktop{position:relative;z-index:1;height:100vh;display:flex;flex-direction:column}
-    .topbar{height:46px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;background:rgba(0,0,0,.25);backdrop-filter:blur(6px);border-bottom:1px solid rgba(0,255,127,.05)}
-    .brand{font-weight:700;color:#00ff7f;letter-spacing:.06em}
-    .status{font-size:.78rem;color:rgba(230,255,246,.55)}
-    .shortcuts{position:absolute;top:62px;left:16px;display:flex;flex-direction:column;gap:12px;z-index:3}
-    .shortcut{width:74px;text-align:center;color:#fff;font-size:11px;cursor:pointer;text-shadow:0 2px 6px #000}
-    .shortcut img{width:46px;height:46px;display:block;margin:0 auto 4px}
-    .wm-root{flex:1;position:relative}
-    .window{position:absolute;top:120px;left:240px;width:540px;min-height:280px;background:radial-gradient(circle at top,rgba(0,255,127,.35),rgba(0,0,0,.9));border:1px solid rgba(0,255,127,.25);border-radius:10px;backdrop-filter:blur(5px);box-shadow:0 18px 40px rgba(0,0,0,.5);display:flex;flex-direction:column}
-    .window-header{height:34px;display:flex;align-items:center;gap:10px;padding:0 10px;background:linear-gradient(90deg,rgba(0,255,127,.35),rgba(0,178,255,.05));cursor:move}
-    .window-title{flex:1;font-size:13px;font-weight:600}
-    .window-actions button{background:transparent;border:0;color:#d2fff0;font-size:14px;cursor:pointer}
-    .window-body{padding:12px;overflow:auto;max-height:62vh}
-    .btn{background:linear-gradient(90deg,#00ff7f,#00b2ff);border:0;border-radius:6px;padding:5px 10px;font-weight:600;color:#00110a;cursor:pointer;margin-top:6px}
-    textarea,input{background:rgba(0,0,0,.35);border:1px solid rgba(0,255,127,.15);color:#fff;border-radius:6px;padding:5px}
-    @media(max-width:820px){.window{width:92vw;left:4vw;top:64px}}
-  </style>
+  <meta charset="utf-8">
+  <title>HACKTIVATE LABS — Matrix Desktop</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta property="og:title" content="HACKTIVATE LABS — AI • Security • Automation • Web3">
+  <meta property="og:description" content="AI • Security • Automation • Web3 • Hacking • Pen Testing • Coding • App Security • Crypto — with 20 Years of HR Staffing and SaaS Solutions">
+  <meta property="og:image" content="./assets/hacktivate-og-card-github.png">
+  <meta property="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Matrix background -->
   <canvas id="matrix"></canvas>
-
-  <!-- Desktop UI -->
-  <div class="desktop">
-    <div class="topbar">
-      <div class="brand">HACKTIVATE OS</div>
-      <div class="status">AI · Network Security · Automation</div>
-    </div>
-
-    <!-- Shortcuts -->
-    <div class="shortcuts">
-      <div class="shortcut" data-open="main-window">
-        <img src="https://cdn-icons-png.flaticon.com/512/609/609361.png" alt="Console" />
-        Console
-      </div>
-      <div class="shortcut" data-open="notes-window">
-        <img src="https://cdn-icons-png.flaticon.com/512/1827/1827312.png" alt="Notes" />
-        Notes
-      </div>
-    </div>
-
-    <div class="wm-root">
-      <!-- Main window -->
-      <div class="window" id="main-window">
-        <div class="window-header">
-          <span class="window-title">AI Automation Console</span>
-          <div class="window-actions">
-            <button data-close="main-window">✕</button>
-          </div>
-        </div>
-        <div class="window-body">
-          <p>Welcome to <strong>Hacktivate Labs</strong> virtual desktop.</p>
-          <p>Use this space to plan automations, content systems, or security workflows.</p>
-          <label>Quick note:</label><br/>
-          <textarea rows="4" style="width:100%;" placeholder="Type ideas, prompts, or tasks here..."></textarea>
-          <button class="btn" onclick="alert('This is where you’d wire in real actions.')">Run Automation</button>
-        </div>
-      </div>
-
-      <!-- Notes window (hidden by default) -->
-      <div class="window" id="notes-window" style="top:180px;left:120px;display:none;">
-        <div class="window-header">
-          <span class="window-title">Notes & Ideas</span>
-          <div class="window-actions">
-            <button data-close="notes-window">✕</button>
-          </div>
-        </div>
-        <div class="window-body">
-          <p>Dump ideas, scripts, content hooks, or routes here.</p>
-          <textarea rows="8" style="width:100%;" placeholder="Your notes..."></textarea>
-        </div>
-      </div>
-    </div>
+  <div id="desktop" class="desktop">
+    <header class="topbar">
+      <div class="brand">HACKTIVATE LABS</div>
+      <div class="status">STEVE.PLASENCIA@OUTLOOK.COM • AI Automation Central</div>
+    </header>
+    <div id="shortcuts" class="shortcuts"></div>
+    <main id="wm-root" class="wm-root" aria-live="polite"></main>
   </div>
-
-  <script>
-    // MATRIX RAIN BACKGROUND
-    const canvas = document.getElementById('matrix');
-    const ctx = canvas.getContext('2d');
-
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-
-    const letters = '01ABCDEFGHIJKLMNOPQRSTUVWXYZ#$%&@';
-    const fontSize = 16;
-    let columns = Math.floor(canvas.width / fontSize);
-    let drops = Array(columns).fill(1);
-
-    function drawMatrix() {
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.08)';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      ctx.fillStyle = '#00ff7f';
-      ctx.font = fontSize + 'px monospace';
-
-      for (let i = 0; i < drops.length; i++) {
-        const text = letters.charAt(Math.floor(Math.random() * letters.length));
-        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-          drops[i] = 0;
-        }
-        drops[i]++;
-      }
-      requestAnimationFrame(drawMatrix);
-    }
-    drawMatrix();
-
-    // DRAGGABLE WINDOWS
-    function makeWindowDraggable(win) {
-      const header = win.querySelector('.window-header');
-      let offsetX = 0, offsetY = 0, isDown = false;
-
-      header.addEventListener('mousedown', (e) => {
-        isDown = true;
-        const rect = win.getBoundingClientRect();
-        offsetX = e.clientX - rect.left;
-        offsetY = e.clientY - rect.top;
-        win.style.zIndex = parseInt(Date.now() / 1000); // crude bring-to-front
-      });
-
-      document.addEventListener('mousemove', (e) => {
-        if (!isDown) return;
-        e.preventDefault();
-        let x = e.clientX - offsetX;
-        let y = e.clientY - offsetY;
-        // keep window somewhat in viewport
-        x = Math.max(0, Math.min(x, window.innerWidth - win.offsetWidth));
-        y = Math.max(46, Math.min(y, window.innerHeight - win.offsetHeight));
-        win.style.left = x + 'px';
-        win.style.top = y + 'px';
-      });
-
-      document.addEventListener('mouseup', () => {
-        isDown = false;
-      });
-    }
-
-    document.querySelectorAll('.window').forEach(makeWindowDraggable);
-
-    // SHORTCUT OPEN / CLOSE
-    document.querySelectorAll('.shortcut').forEach(sc => {
-      sc.addEventListener('click', () => {
-        const id = sc.getAttribute('data-open');
-        if (!id) return;
-        const win = document.getElementById(id);
-        if (win) {
-          win.style.display = 'flex';
-          win.style.zIndex = parseInt(Date.now() / 1000);
-        }
-      });
-    });
-
-    document.querySelectorAll('.window-actions button[data-close]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const id = btn.getAttribute('data-close');
-        const win = document.getElementById(id);
-        if (win) win.style.display = 'none';
-      });
-    });
-  </script>
+  <script type="module" src="main.js"></script>
 </body>
 </html>
