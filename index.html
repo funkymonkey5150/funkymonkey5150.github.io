@@ -1,46 +1,348 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>HACKTIVATE LABS — Matrix Desktop</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta property="og:title" content="HACKTIVATE LABS — AI • Security • Automation • Web3">
-  <meta property="og:description" content="AI • Security • Automation • Web3 • Hacking • Pen Testing • Coding • App Security • Crypto — with 20 Years of HR Staffing and SaaS Solutions">
-  <meta property="og:image" content="./assets/hacktivate-og-card-github.png">
-  <meta property="twitter:card" content="summary_large_image">
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <title>Hacktivate OS</title>
+  <style>
+    body,html{margin:0;height:100%;background:#000;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,sans-serif;color:#e6fff6;overflow:hidden}
+    #matrix{position:fixed;inset:0;z-index:0;background:#000}
+
+    .desktop{position:relative;z-index:1;height:100vh;display:flex;flex-direction:column}
+    .topbar{height:46px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;background:rgba(0,0,0,.35);backdrop-filter:blur(8px);border-bottom:1px solid rgba(0,255,127,.12);box-shadow:0 6px 20px rgba(0,0,0,.7)}
+    .brand{font-weight:700;color:#00ff7f;letter-spacing:.08em;font-size:.9rem}
+    .status{font-size:.78rem;color:rgba(230,255,246,.75)}
+
+    .shortcuts{position:absolute;top:62px;left:16px;display:flex;flex-direction:column;gap:12px;z-index:3}
+    .shortcut{width:80px;text-align:center;color:#fff;font-size:11px;cursor:pointer;text-shadow:0 2px 6px #000;transition:transform .18s ease,filter .18s ease}
+    .shortcut img{width:46px;height:46px;display:block;margin:0 auto 4px;border-radius:14px;box-shadow:0 10px 24px rgba(0,0,0,.75);border:1px solid rgba(0,255,127,.4);background:radial-gradient(circle at 30% 0,rgba(0,255,127,.4),rgba(0,0,0,.95))}
+    .shortcut:hover{transform:translateY(-4px) scale(1.03);filter:drop-shadow(0 0 10px rgba(0,255,127,.7))}
+
+    .wm-root{flex:1;position:relative}
+
+    .window{position:absolute;top:120px;left:240px;width:560px;min-height:260px;background:radial-gradient(circle at top,rgba(0,255,127,.35),rgba(0,0,0,.95));border:1px solid rgba(0,255,127,.25);border-radius:12px;backdrop-filter:blur(9px);box-shadow:0 20px 50px rgba(0,0,0,.8);display:flex;flex-direction:column;overflow:hidden;transition:opacity .2s ease,transform .2s ease}
+    .window.hidden{opacity:0;transform:translateY(10px) scale(.97);pointer-events:none}
+    .window-header{height:34px;display:flex;align-items:center;gap:10px;padding:0 10px;background:linear-gradient(90deg,rgba(0,255,127,.45),rgba(0,178,255,.08));cursor:move;user-select:none}
+    .window-title{flex:1;font-size:13px;font-weight:600}
+    .window-actions{display:flex;align-items:center;gap:6px}
+    .window-actions button{background:transparent;border:0;color:#d2fff0;font-size:13px;cursor:pointer;width:18px;height:18px;border-radius:50%;display:grid;place-items:center}
+    .window-actions .min-btn{background:radial-gradient(circle at 30% 0,#ffcf40,#8b5a00)}
+    .window-actions .close-btn{background:radial-gradient(circle at 30% 0,#ff4b4b,#8b0000)}
+    .window-actions button:hover{filter:brightness(1.2)}
+
+    .window-body{padding:12px;overflow:auto;max-height:62vh;font-size:.86rem}
+    .window-body p{margin:0 0 .6rem}
+
+    .btn{background:linear-gradient(90deg,#00ff7f,#00b2ff);border:0;border-radius:6px;padding:6px 12px;font-weight:600;color:#00110a;cursor:pointer;margin-top:6px;font-size:.8rem}
+    .btn:hover{filter:brightness(1.08)}
+
+    textarea,input{background:rgba(0,0,0,.35);border:1px solid rgba(0,255,127,.25);color:#fff;border-radius:6px;padding:6px;font-size:.82rem}
+    textarea::placeholder,input::placeholder{color:rgba(230,255,246,.45)}
+
+    .taskbar{height:32px;display:flex;align-items:center;justify-content:space-between;padding:0 10px;background:rgba(0,0,0,.8);backdrop-filter:blur(8px);border-top:1px solid rgba(0,255,127,.14);box-shadow:0 -6px 18px rgba(0,0,0,.7);font-size:.78rem}
+    .task-left{display:flex;align-items:center;gap:6px}
+    .task-logo{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;background:radial-gradient(circle at 30% 0,#00ff7f,#006644);color:#00110a;font-size:.7rem;font-weight:700}
+    .task-label{color:rgba(230,255,246,.8)}
+    .task-items{display:flex;align-items:center;gap:6px;flex:1;justify-content:center}
+    .task-item{min-width:90px;max-width:150px;padding:3px 8px;border-radius:999px;border:1px solid rgba(0,255,127,.25);background:rgba(0,0,0,.55);color:rgba(230,255,246,.8);font-size:.74rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:center;cursor:pointer;transition:background .16s ease,transform .12s ease}
+    .task-item.active{background:radial-gradient(circle at 30% 0,rgba(0,255,127,.7),rgba(0,0,0,.85));color:#00110a;font-weight:600}
+    .task-item:hover{transform:translateY(-1px)}
+
+    .task-right{display:flex;align-items:center;gap:10px;color:rgba(230,255,246,.7)}
+    .sys-status{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.74rem}
+    .clock{font-family:inherit}
+
+    .sys-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:6px}
+    .sys-card{border-radius:8px;padding:8px;border:1px solid rgba(0,255,127,.28);background:rgba(0,0,0,.5);font-size:.78rem}
+    .sys-meta{margin-top:10px;font-size:.78rem;color:rgba(230,255,246,.75)}
+
+    @media(max-width:820px){
+      .window{width:92vw;left:4vw;top:72px}
+      .shortcuts{flex-direction:row;top:52px;left:8px}
+      .task-items{display:none}
+    }
+  </style>
 </head>
 <body>
   <!-- Matrix background -->
   <canvas id="matrix"></canvas>
 
   <!-- Desktop UI -->
-  <div id="desktop" class="desktop">
-    <header class="topbar">
-      <div class="brand">HACKTIVATE LABS</div>
-      <div class="status">steve㉿hacktivate · AI · Security · Automation</div>
-    </header>
+  <div class="desktop">
+    <div class="topbar">
+      <div class="brand">HACKTIVATE OS</div>
+      <div class="status">AI · Network Security · Automation</div>
+    </div>
 
-    <!-- Desktop shortcuts -->
-    <div id="shortcuts" class="shortcuts"></div>
+    <!-- Shortcuts -->
+    <div class="shortcuts">
+      <div class="shortcut" data-open="console-window">
+        <img src="https://cdn-icons-png.flaticon.com/512/609/609361.png" alt="Console" />
+        Console
+      </div>
+      <div class="shortcut" data-open="notes-window">
+        <img src="https://cdn-icons-png.flaticon.com/512/1827/1827312.png" alt="Notes" />
+        Notes
+      </div>
+      <div class="shortcut" data-open="ai-window">
+        <img src="https://cdn-icons-png.flaticon.com/512/4712/4712109.png" alt="AI Tools" />
+        AI Tools
+      </div>
+      <div class="shortcut" data-open="monitor-window">
+        <img src="https://cdn-icons-png.flaticon.com/512/1828/1828919.png" alt="Monitor" />
+        Monitor
+      </div>
+    </div>
 
-    <!-- Window manager root -->
-    <main id="wm-root" class="wm-root" aria-live="polite"></main>
+    <div class="wm-root">
+      <!-- Console window -->
+      <div class="window" id="console-window" style="top:120px;left:240px;">
+        <div class="window-header">
+          <span class="window-title">AI Automation Console</span>
+          <div class="window-actions">
+            <button class="min-btn" data-minimize="console-window">–</button>
+            <button class="close-btn" data-close="console-window">✕</button>
+          </div>
+        </div>
+        <div class="window-body">
+          <p>Welcome to <strong>Hacktivate Labs</strong> virtual desktop.</p>
+          <p>Use this console to plan automations, content systems, or security workflows.</p>
+          <label>Quick note:</label><br/>
+          <textarea rows="4" style="width:100%;" placeholder="Type ideas, prompts, or tasks here..."></textarea>
+          <button class="btn" onclick="alert('This is where you’d wire in real automations or API calls.')">Run Automation</button>
+        </div>
+      </div>
+
+      <!-- Notes window -->
+      <div class="window hidden" id="notes-window" style="top:160px;left:120px;">
+        <div class="window-header">
+          <span class="window-title">Notes & Ideas</span>
+          <div class="window-actions">
+            <button class="min-btn" data-minimize="notes-window">–</button>
+            <button class="close-btn" data-close="notes-window">✕</button>
+          </div>
+        </div>
+        <div class="window-body">
+          <p>Dump ideas, scripts, hooks, or routes here.</p>
+          <textarea rows="8" style="width:100%;" placeholder="Content hooks, offer ideas, outreach scripts, lab concepts..."></textarea>
+        </div>
+      </div>
+
+      <!-- AI Tools window -->
+      <div class="window hidden" id="ai-window" style="top:180px;left:320px;">
+        <div class="window-header">
+          <span class="window-title">AI Automation & Tools Hub</span>
+          <div class="window-actions">
+            <button class="min-btn" data-minimize="ai-window">–</button>
+            <button class="close-btn" data-close="ai-window">✕</button>
+          </div>
+        </div>
+        <div class="window-body">
+          <p><strong>AI Automation & Tools — Hacktivate Labs</strong></p>
+          <p>Curated AI tools to save time, ship content faster, and automate workflows:</p>
+          <ul>
+            <li>⚙ Workflow & business automation (CRM, outreach, ops)</li>
+            <li>🎨 AI art / video / content generation</li>
+            <li>🔐 Security / OSINT helpers & detectors</li>
+            <li>📊 Research, planning & analytics</li>
+          </ul>
+          <p>Use this hub as your link panel to playlists, docs, and stacks.</p>
+          <button class="btn" onclick="window.open('https://www.youtube.com','_blank')">Open AI Playlist</button>
+        </div>
+      </div>
+
+      <!-- System Monitor window -->
+      <div class="window hidden" id="monitor-window" style="top:140px;left:520px;">
+        <div class="window-header">
+          <span class="window-title">System Monitor</span>
+          <div class="window-actions">
+            <button class="min-btn" data-minimize="monitor-window">–</button>
+            <button class="close-btn" data-close="monitor-window">✕</button>
+          </div>
+        </div>
+        <div class="window-body">
+          <p><strong>Hacktivate OS — System Monitor</strong></p>
+          <div class="sys-grid">
+            <div class="sys-card">
+              <div>CPU Usage</div>
+              <div id="cpu-val">14%</div>
+            </div>
+            <div class="sys-card">
+              <div>Memory</div>
+              <div id="mem-val">42%</div>
+            </div>
+            <div class="sys-card">
+              <div>Network</div>
+              <div id="net-val">OK · 23ms</div>
+            </div>
+            <div class="sys-card">
+              <div>Sessions</div>
+              <div id="sess-val">3 active</div>
+            </div>
+          </div>
+          <div class="sys-meta">
+            <p>Fake metrics for vibe only — imagine this wired to real logs, uptime, or security signals.</p>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Taskbar -->
-    <footer class="taskbar">
-      <div class="taskbar-left">
+    <div class="taskbar">
+      <div class="task-left">
         <span class="task-logo">㉿</span>
         <span class="task-label">Hacktivate OS</span>
       </div>
-      <div id="task-items" class="task-items"></div>
-      <div class="taskbar-right">
+      <div class="task-items">
+        <button class="task-item active" data-toggle="console-window">Console</button>
+        <button class="task-item" data-toggle="notes-window">Notes</button>
+        <button class="task-item" data-toggle="ai-window">AI Tools</button>
+        <button class="task-item" data-toggle="monitor-window">Monitor</button>
+      </div>
+      <div class="task-right">
         <span id="sys-status" class="sys-status">NET: OK · CPU: 12%</span>
         <span id="clock" class="clock"></span>
       </div>
-    </footer>
+    </div>
   </div>
 
-  <script src="main.js"></script>
+  <script>
+    // MATRIX RAIN
+    const canvas = document.getElementById('matrix');
+    const ctx = canvas.getContext('2d');
+    function resizeCanvas(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;}
+    resizeCanvas();
+    window.addEventListener('resize',resizeCanvas);
+    const letters='01ABCDEFGHIJKLMNOPQRSTUVWXYZ#$%&@';
+    const fontSize=16;
+    let columns=Math.floor(window.innerWidth/fontSize);
+    let drops=Array(columns).fill(1);
+    function drawMatrix(){
+      ctx.fillStyle='rgba(0,0,0,0.08)';
+      ctx.fillRect(0,0,canvas.width,canvas.height);
+      ctx.fillStyle='#00ff7f';
+      ctx.font=fontSize+'px monospace';
+      for(let i=0;i<drops.length;i++){
+        const text=letters.charAt(Math.floor(Math.random()*letters.length));
+        ctx.fillText(text,i*fontSize,drops[i]*fontSize);
+        if(drops[i]*fontSize>canvas.height && Math.random()>0.975){drops[i]=0;}
+        drops[i]++;
+      }
+      requestAnimationFrame(drawMatrix);
+    }
+    drawMatrix();
+
+    // DRAGGABLE WINDOWS
+    function makeWindowDraggable(win){
+      const header=win.querySelector('.window-header');
+      let offsetX=0,offsetY=0,isDown=false;
+      header.addEventListener('mousedown',(e)=>{
+        isDown=true;
+        const rect=win.getBoundingClientRect();
+        offsetX=e.clientX-rect.left;
+        offsetY=e.clientY-rect.top;
+        win.style.zIndex=String(Date.now());
+      });
+      document.addEventListener('mousemove',(e)=>{
+        if(!isDown)return;
+        e.preventDefault();
+        let x=e.clientX-offsetX;
+        let y=e.clientY-offsetY;
+        const maxX=window.innerWidth-win.offsetWidth;
+        const maxY=window.innerHeight-win.offsetHeight-32; // above taskbar
+        x=Math.max(0,Math.min(x,maxX));
+        y=Math.max(46,Math.min(y,maxY));
+        win.style.left=x+'px';
+        win.style.top=y+'px';
+      });
+      document.addEventListener('mouseup',()=>{isDown=false;});
+    }
+    document.querySelectorAll('.window').forEach(makeWindowDraggable);
+
+    // WINDOW SHOW/HIDE HELPERS
+    function showWindow(id){
+      const win=document.getElementById(id);
+      if(!win)return;
+      win.classList.remove('hidden');
+      win.style.display='flex';
+      win.style.zIndex=String(Date.now());
+      document.querySelectorAll('.task-item').forEach(btn=>{
+        if(btn.dataset.toggle===id) btn.classList.add('active');
+      });
+    }
+    function hideWindow(id){
+      const win=document.getElementById(id);
+      if(!win)return;
+      win.classList.add('hidden');
+      setTimeout(()=>{win.style.display='none';},180);
+      document.querySelectorAll('.task-item').forEach(btn=>{
+        if(btn.dataset.toggle===id) btn.classList.remove('active');
+      });
+    }
+
+    // SHORTCUT OPEN
+    document.querySelectorAll('.shortcut').forEach(sc=>{
+      sc.addEventListener('click',()=>{
+        const id=sc.getAttribute('data-open');
+        if(!id)return;
+        showWindow(id);
+      });
+    });
+
+    // CLOSE / MINIMIZE BUTTONS
+    document.querySelectorAll('button[data-close]').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const id=btn.getAttribute('data-close');
+        hideWindow(id);
+      });
+    });
+    document.querySelectorAll('button[data-minimize]').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const id=btn.getAttribute('data-minimize');
+        hideWindow(id);
+      });
+    });
+
+    // TASKBAR TOGGLES
+    document.querySelectorAll('.task-item').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const id=btn.dataset.toggle;
+        const win=document.getElementById(id);
+        const visible=win && win.style.display!=='none' && !win.classList.contains('hidden');
+        if(visible){hideWindow(id);}else{showWindow(id);}
+      });
+    });
+
+    // CLOCK
+    const clockEl=document.getElementById('clock');
+    function updateClock(){
+      const now=new Date();
+      const hh=String(now.getHours()).padStart(2,'0');
+      const mm=String(now.getMinutes()).padStart(2,'0');
+      clockEl.textContent=`${hh}:${mm}`;
+    }
+    setInterval(updateClock,1000);
+    updateClock();
+
+    // FAKE SYSTEM STATS
+    const sysStatusEl=document.getElementById('sys-status');
+    const cpuEl=document.getElementById('cpu-val');
+    const memEl=document.getElementById('mem-val');
+    const netEl=document.getElementById('net-val');
+    const sessEl=document.getElementById('sess-val');
+
+    function updateStats(){
+      const cpu=(8+Math.random()*30)|0;
+      const mem=(30+Math.random()*40)|0;
+      const net=(10+Math.random()*40)|0;
+      const sess=(1+Math.random()*4)|0;
+      if(sysStatusEl) sysStatusEl.textContent=`NET: ${net}ms · CPU: ${cpu}%`;
+      if(cpuEl) cpuEl.textContent=`${cpu}%`;
+      if(memEl) memEl.textContent=`${mem}%`;
+      if(netEl) netEl.textContent=`OK · ${net}ms`;
+      if(sessEl) sessEl.textContent=`${sess} active`;
+    }
+    setInterval(updateStats,2000);
+    updateStats();
+  </script>
 </body>
 </html>
