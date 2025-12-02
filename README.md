@@ -6,7 +6,7 @@ Static, GitHub Pages–ready hacker desktop for **Steve Plasencia**.
 1. Create repo: `hacktivate-labs`
 2. Upload all files from this folder
 3. GitHub → Settings → Pages → Deploy from branch → `main` → `/ (root)`
-4. Open: https://YOURUSERNAME.github.io/hacktivate-labs
+4. Open: https://funkymonkey5150.github.io/hacktivate-labs
 
 ## Local run
 ```bash
