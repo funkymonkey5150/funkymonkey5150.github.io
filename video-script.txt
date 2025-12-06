@@ -1,7 +1,13 @@
-TITLE: Build a Hacker Portfolio on GitHub Pages (HACKTIVATE LABS)
+TITLE: Build a Hacker Portfolio on GitHub Pages (HACKTIVATE NETWORK SOLUTIONS)
 
 Intro:
-"Yo what’s good carnalgas — Steve from HACKTIVATE LABS. This is how to build a Matrix desktop portfolio for hackers and automation devs."
+Welcome to the Matrix Desktop Portfolio project from HACKTIVATE NETWORK SOLUTIONS— a cyber-themed, automation-ready personal site engineered for hackers, AI builders, solopreneurs, and digital mercenaries who don’t want a boring portfolio.
+
+This build turns GitHub Pages into a terminal-style, neon cyber environment with animated console UI vibes straight out of sci-fi.
+
+Deploy it, customize it, and flex it like the automation ghost-in-the-machine you are.
+
+⸻
 
 Steps:
 1) Download / clone repo
