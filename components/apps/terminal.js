@@ -1,1 +1,1 @@
-export function displayTerminal(){const d=document.createElement('div');d.innerHTML=`<pre>steve㉿hacktivate:~$ welcome.sh\nWelcome to HACKTIVATE LABS / AI Automation Central.\nType 'help' to list available apps.\n</pre>`;return d;}
+export function displayTerminal(){const d=document.createElement('div');d.innerHTML=`<pre>steve㉿hacktivate:~$ welcome.sh\nWelcome to HACKTIVATE NETWORK SOLUTIONS / HACKTIVATE LABS / AI Automation Central.\nType 'help' to list available apps.\n</pre>`;return d;}
